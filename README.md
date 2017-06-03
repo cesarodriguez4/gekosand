@@ -1,2 +1,0 @@
-# gekosand
-GekoSand
