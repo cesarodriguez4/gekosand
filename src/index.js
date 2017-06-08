@@ -7,9 +7,11 @@ import {main} from './app/main';
 import {header} from './app/header';
 import {carousel} from './app/carousel';
 import {steps} from './app/steps';
+import {marcas} from './app/marcas';
+import {footer} from './app/footer';
 
 import 'font-awesome/css/font-awesome.css';
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbootstrap/css/mdb.min.css';
 import './style/index.scss';
 
@@ -21,4 +23,6 @@ angular
   .component('gkheader', header)
   .component('app', main)
   .component('carousel', carousel)
-  .component('pasos', steps);
+  .component('pasos', steps)
+  .component('marcas', marcas)
+  .component('gkfooter', footer);
