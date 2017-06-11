@@ -10,16 +10,20 @@ import {steps} from './app/steps';
 import {marcas} from './app/marcas';
 import {footer} from './app/footer';
 import {consulta} from './app/consulta';
+import {login} from './app/login';
+import {recuperar} from './app/recuperar';
 
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbootstrap/css/mdb.min.css';
 import './style/index.scss';
 
+import 'angular-country-picker';
+
 export const app = 'app';
 
 angular
-  .module(app, ['ui.router'])
+  .module(app, ['ui.router', 'puigcerber.countryPicker'])
   .config(routesConfig)
   .component('gkheader', header)
   .component('app', main)
@@ -27,4 +31,7 @@ angular
   .component('pasos', steps)
   .component('marcas', marcas)
   .component('gkfooter', footer)
-  .component('consulta', consulta);
+  .component('consulta', consulta)
+  .component('login', login)
+  .component('recuperar', recuperar);
+

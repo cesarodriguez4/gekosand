@@ -13,5 +13,13 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('consulta', {
       url: '/consulta',
       component: 'consulta'
+    })
+    .state('login', {
+      url: '/login',
+      component: 'login'
+    })
+    .state('recuperar', {
+      url: '/recuperar',
+      component: 'recuperar'
     });
 }
