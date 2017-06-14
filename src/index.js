@@ -12,6 +12,7 @@ import {footer} from './app/footer';
 import {consulta} from './app/consulta';
 import {login} from './app/login';
 import {recuperar} from './app/recuperar';
+import {consultaTicket} from './app/consultaTicket';
 
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -33,5 +34,6 @@ angular
   .component('gkfooter', footer)
   .component('consulta', consulta)
   .component('login', login)
-  .component('recuperar', recuperar);
+  .component('recuperar', recuperar)
+  .component('consultaTicket', consultaTicket);
 

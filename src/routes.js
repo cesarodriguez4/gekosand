@@ -21,5 +21,9 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('recuperar', {
       url: '/recuperar',
       component: 'recuperar'
+    })
+    .state('consulta-ticket', {
+      url: '/consulta/ticket',
+      component: 'consultaTicket'
     });
 }
