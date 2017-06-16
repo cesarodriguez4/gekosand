@@ -14,6 +14,8 @@ import {login} from './app/login';
 import {recuperar} from './app/recuperar';
 import {consultaTicket} from './app/consultaTicket';
 
+import {API} from './app/API';
+
 import 'font-awesome/css/font-awesome.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'mdbootstrap/css/mdb.min.css';
@@ -25,6 +27,7 @@ export const app = 'app';
 
 angular
   .module(app, ['ui.router', 'puigcerber.countryPicker'])
+  .service('API', API)
   .config(routesConfig)
   .component('gkheader', header)
   .component('app', main)

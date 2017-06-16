@@ -11,35 +11,35 @@
 				<!--Body-->
 				<div class="md-form">
 					<i class="fa fa-user prefix"></i>
-					<input type="text" id="form3" class="form-control">
+					<input ng-model = "$ctrl.name" name="name" type="text" id="form3" class="form-control" required>
 					<label for="form3">Nombre y Apellido</label>
 				</div>
 				<div class="md-form">
 					<i class="fa fa-envelope prefix"></i>
-					<input type="email" id="form2" class="form-control">
+					<input ng-model="$ctrl.email"  name="email" type="email" id="form2" class="form-control" required>
 					<label for="form2">Tu email</label>
 				</div>
 				<div class="md-form">
 					<i class="fa fa-tag prefix"></i>
-					<input type="text" id="form32" class="form-control">
+					<input ng-model="$ctrl.motivo" name="motivo" type="text" id="form32" class="form-control" required>
 					<label for="form34">Motivo</label>
 				</div>
 				<div class="md-form">
 					<i class="fa fa-pencil prefix"></i>
-					<textarea type="text" id="form8" class="md-textarea"></textarea>
+					<textarea ng-model = "$ctrl.consulta" type="text" id="form8" class="md-textarea"  name="consulta" required></textarea>
 					<label for="form8">Tu consulta</label>
 				</div>
-				<select ng-model="selectedCountry" pvp-country-picker class="md-form mdb-select form-control container col-6">
+				<select ng-model="$ctrl.selectedCountry" pvp-country-picker  name="pais" class="md-form mdb-select form-control container col-6">
 					<option value="" disabled selected>Elige tu país</option>
 				</select>
 				<div class="text-center">
-					<button class="btn btn-default mask waves-effect">Enviar</button>
+					<button ng-disabled = "Form.$invalid" class="btn btn-default mask waves-effect">Enviar</button>
 					<div class="call">
 						<br>
 						<p>¿O prefieres llamar?
 							<br>
 							<span><i class="fa fa-phone"> </i></span>305-420-6706</p>
-						</div>
+					</div>
 					</div>
 				</div>
 			</form>
