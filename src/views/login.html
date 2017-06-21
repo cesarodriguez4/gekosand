@@ -1,31 +1,30 @@
-
 <!--Form without header-->
 <div class="card col-lg-4 container mt-3 mb-3">
     <div class="card-block">
+        <form name="Form">
+            <!--Header-->
+            <div class="text-center">
+                <h3><i class="fa fa-lock"></i> Login:</h3>
+                <hr class="mt-2 mb-2">
+            </div>
+            <!--Body-->
+            <div class="md-form">
+                <i class="fa fa-envelope prefix"></i>
+                <input type="email" ng-model="$ctrl.correo" id="form2" class="form-control" required>
+                <label for="form2">email</label>
+            </div>
+            <div class="md-form">
+                <i class="fa fa-lock prefix"></i>
+                <input type="password" ng-model="$ctrl.password" id="form4" class="form-control">
+                <label for="form4">password</label>
+                <small class="red-text">{{$ctrl.result}}</small>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-unique mask waves-effect" ng-disabled="Form.$invalid" ng-click="$ctrl.login()">Login</button>
+            </div>
 
-        <!--Header-->
-        <div class="text-center">
-            <h3><i class="fa fa-lock"></i> Login:</h3>
-            <hr class="mt-2 mb-2">
-        </div>
-
-        <!--Body-->
-        <div class="md-form">
-            <i class="fa fa-envelope prefix"></i>
-            <input type="text" id="form2" class="form-control">
-            <label for="form2">email</label>
-        </div>
-
-        <div class="md-form">
-            <i class="fa fa-lock prefix"></i>
-            <input type="password" id="form4" class="form-control">
-            <label for="form4">password</label>
-        </div>
-
-        <div class="text-center">
-            <button class="btn btn-unique">Login</button>
-        </div>
-
+        </form>
+        
     </div>
 </div>
 <!--/Form without header-->

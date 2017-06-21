@@ -4,13 +4,13 @@ export const consulta = {
     this.sendForm = () => {
       const data = {
         nombre: this.name,
-        email: this.email,
+        correo: this.email,
         motivo: this.motivo,
         consulta: this.consulta,
         pais: this.selectedCountry
       };
-      API.sendQuery(data).then(result => {
-        this.result = result;
+      API.sendQuery(data).then(() => {
+        angular.element('#modal').modal('show');
       }, error => {
         this.error = error;
       });

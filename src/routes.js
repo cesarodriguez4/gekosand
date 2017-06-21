@@ -25,5 +25,9 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('consulta-ticket', {
       url: '/consulta/ticket',
       component: 'consultaTicket'
+    })
+    .state('profile', {
+      url: '/perfil',
+      component: 'profile'
     });
 }

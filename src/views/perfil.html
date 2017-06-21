@@ -1,0 +1,70 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-3 mt-5">
+			<div class="card text-center p-5 mb-2">
+				<h3>Total de operaciones</h3>
+				<h1>{{$ctrl.result.length}}</h1>
+			</div>
+			<div class="card text-center p-5 mb-2">
+				<i ng-if="$ctrl.hour < 17" class="fa fa-sun-o yellow-text fa-5x mb-1"></i>
+				<i ng-if="$ctrl.hour > 17" class="fa fa-moon-o blue-text fa-5x mb-1"></i>
+				<h3>Hoy es</h3>
+				<h4>{{$ctrl.fecha | date:'dd-MM-yyyy'}}</h4>
+			</div>
+			<div class="card text-center p-5 mb-5">
+				<h3>Notas</h3>
+				<input type="text" class="form-control" id="note-1">
+				<button class="btn btn-success">Agregar Nota</button>
+			</div>
+		</div>
+		<div class="col-lg-9">
+			<div class="card mt-5 mb-1 p-5">
+				<h1>Control de Operaciones</h1>
+				<form class="form-inline">
+					<div class="form-group col-lg-4">
+						<input type="text" ng-model="$ctrl.search" class="form-control" placeholder="Buscar">
+					</div>
+				</form>
+				<div class="col-lg-1 container text-center">
+					<dir-pagination-controls
+					max-size="5"
+					direction-links="true"
+					boundary-links="true" >
+					</dir-pagination-controls>
+				</div>
+				<table class="table">
+					<thead class="success-color white-text">
+						<th>Nombre</th>
+						<th>Correo</th>
+						<th>Ticket</th>
+						<th>País</th>
+						<th>Estado</th>
+						<th>Acción</th>
+					</thead>
+					<tbody>
+						<tr dir-paginate="ticket in $ctrl.result | filter: $ctrl.search | itemsPerPage: 5">
+							<td>{{ticket.nombre}}</td>
+							<td title="{{ticket.correo}}">{{ticket.correo | limitTo: 10}}...</td>
+							<td>{{ticket.ticket}}</td>
+							<td title="{{ticket.pais}}">{{ticket.pais | limitTo: 10}}</td>
+							<td>
+								<select class="form-control">
+									<option>RECIBIDA</option>
+									<option>EN PROCESO</option>
+									<option>OFERTA ENVIADA</option>
+									<option>CONCRETADA</option>
+									<option>NO CONCRETADA</option>
+								</select>
+							</td>
+							<td>
+								<i class="fa fa-comments fa-2x green-text align-middle"></i>
+								<i class="fa fa-times fa-2x red-text align-middle"></i>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+	</div>
+</div>
