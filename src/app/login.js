@@ -7,10 +7,10 @@ export const login = {
       API.login({correo, password}).then(result => {
         if (result.data.error) {
           this.result = result.data;
+          $cookies.put('session', true);
         } else {
           $cookies.put('session', true);
           $state.go('profile');
-          location.reload();
         }
       }, error => {
         this.result = error;

@@ -1,12 +1,12 @@
 <div class="consulta">
 	<h3 class="text-center mt-5">¿Interesado en adquirir algún material o equipo?</h3>
-	<h5 class="text-center mb-3">¡Cuéntanos de que se trata y te encontramos la mejor opción!</h5>
+	<h5 class="text-center mb-3">¡Cuéntenos de que se trata y le encontraremos la mejor opción!</h5>
 	<div class="col-lg-5 container ">
 		<form name="Form">
 			<!--Naked Form-->
 			<div class="card-block">
 				<!--Body-->
-				<p class="text-center">Te responderemos tu consulta por correo.</p>
+				<p class="text-center">Le responderemos su consulta por correo.</p>
 				<br>
 				<!--Body-->
 				<div class="md-form">
@@ -17,7 +17,7 @@
 				<div class="md-form">
 					<i class="fa fa-envelope prefix"></i>
 					<input ng-model="$ctrl.email"  name="email" type="email" id="form2" class="form-control" required>
-					<label for="form2">Tu email</label>
+					<label for="form2">Su email</label>
 				</div>
 				<div class="md-form">
 					<i class="fa fa-tag prefix"></i>
@@ -27,10 +27,10 @@
 				<div class="md-form">
 					<i class="fa fa-pencil prefix"></i>
 					<textarea ng-model = "$ctrl.consulta" type="text" id="form8" class="md-textarea"  name="consulta" required></textarea>
-					<label for="form8">Tu consulta</label>
+					<label for="form8">Su consulta</label>
 				</div>
 				<select ng-model="$ctrl.selectedCountry"  pvp-country-picker="name"  name="pais" class="md-form mdb-select form-control container col-6">
-					<option value="" disabled selected>Elige tu país</option>
+					<option value="" disabled selected>Su país</option>
 				</select>
 				<div class="text-center">
 					<button ng-disabled = "Form.$invalid" class="btn btn-default mask waves-effect" ng-click="$ctrl.sendForm()">Enviar</button>

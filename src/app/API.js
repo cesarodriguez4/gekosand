@@ -11,4 +11,10 @@ export class API {
   getQuery() {
     return this.$http.get('https://gekoapi.herokuapp.com/query');
   }
+  getMessages(ticket) {
+    return this.$http.get(`https://gekoapi.herokuapp.com/messages/${ticket}`);
+  }
+  deleteClient(ticket) {
+    return this.$http.get(`https://gekoapi.herokuapp.com/users/delete/${ticket}`);
+  }
 }

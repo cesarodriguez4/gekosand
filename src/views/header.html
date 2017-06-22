@@ -4,8 +4,11 @@
 			<a class="navbar-brand d-inline-block" ui-sref="app">
 				<img width="130" height="50" src="/assets/images/logo.png">
 			</a>
-			<a >
+			<a ng-if="!$ctrl.session">
 				<button type="button" class="btn btn-unique mask waves-effect" ui-sref="login">Iniciar Sesión</button>
+			</a>
+			<a ng-if="$ctrl.session">
+				<button type="button" class="btn btn-unique mask waves-effect" ui-sref="profile">Perfil</button>
 			</a>
 			<a>
 				<button type="button" class="btn btn-yellow mask waves-effect" ui-sref="consulta">Hacer una orden</button>
