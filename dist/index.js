@@ -8823,6 +8823,16 @@ var API = exports.API = function () {
     value: function getQuery() {
       return this.$http.get('https://gekoapi.herokuapp.com/query');
     }
+  }, {
+    key: 'getMessages',
+    value: function getMessages(ticket) {
+      return this.$http.get('https://gekoapi.herokuapp.com/messages/' + ticket);
+    }
+  }, {
+    key: 'deleteClient',
+    value: function deleteClient(ticket) {
+      return this.$http.get('https://gekoapi.herokuapp.com/users/delete/' + ticket);
+    }
   }]);
 
   return API;
@@ -8858,12 +8868,14 @@ var consulta = exports.consulta = {
     var _this = this;
 
     this.sendForm = function () {
+      var today = new Date();
       var data = {
         nombre: _this.name,
         correo: _this.email,
         motivo: _this.motivo,
         consulta: _this.consulta,
-        pais: _this.selectedCountry
+        pais: _this.selectedCountry,
+        fecha: today
       };
       API.sendQuery(data).then(function () {
         angular.element('#modal').modal('show');
@@ -8913,7 +8925,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var header = exports.header = {
-  template: __webpack_require__(84)
+  template: __webpack_require__(84),
+  controller: function controller($cookies) {
+    this.session = $cookies.get('session');
+  }
 };
 
 /***/ }),
@@ -8937,10 +8952,10 @@ var login = exports.login = {
       API.login({ correo: correo, password: password }).then(function (result) {
         if (result.data.error) {
           _this.result = result.data;
+          $cookies.put('session', true);
         } else {
           $cookies.put('session', true);
           $state.go('profile');
-          location.reload();
         }
       }, function (error) {
         _this.result = error;
@@ -8992,13 +9007,38 @@ var profile = exports.profile = {
   controller: function controller(API) {
     var _this = this;
 
-    this.fecha = new Date();
-    this.hour = new Date().getHours();
     API.getQuery().then(function (result) {
       _this.result = result.data;
     }, function (error) {
       _this.result = error;
     });
+
+    this.calculoDias = function (date) {
+      var origin = new Date(date).getDate();
+      var now = new Date().getDate();
+      var days = Math.floor((now - origin) / (1000 * 60 * 60 * 24));
+      if (days === 0) {
+        return 'Hoy';
+      }
+      return days + ' Días.';
+    };
+    this.openChat = function (ticket) {
+      angular.element('#chat').modal('show');
+      API.getMessages(ticket).then(function (result) {
+        _this.messages = result.data;
+      }, function (error) {
+        _this.messages = error;
+      });
+    };
+    this.deleteClient = function (ticket) {
+      angular.element('#delete').modal('show');
+      _this.deleteSelected = ticket;
+    };
+    this.submitDelete = function (ticket) {
+      angular.element('button.close').click();
+      API.deleteClient(ticket);
+      // Borrar ticket en cliente con for in
+    };
   }
 };
 
@@ -43890,7 +43930,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, ".header {\n  background-color: #2E2E2E;\n  color: white; }\n\n.carousel p, .carousel h3 {\n  text-shadow: 0px 4px 10px black;\n  font-weight: bold; }\n\n.pasos h2 {\n  color: white; }\n\n.marcas h2 {\n  color: white; }\n\n.consulta h3, .consulta h5 {\n  color: white; }\n\n.consulta .card-block {\n  background-color: white; }\n\nbody {\n  background-color: #2e2e2e; }\n\n.navbar {\n  background-color: transparent; }\n\n.scrolling-navbar {\n  transition: background .5s ease-in-out, padding .5s ease-in-out; }\n\n.top-nav-collapse {\n  background-color: #1C2331; }\n\nfooter.page-footer {\n  background-color: #1C2331;\n  margin-top: 0; }\n\n@media only screen and (max-width: 768px) {\n  .navbar {\n    background-color: #1C2331; } }\n", ""]);
+exports.push([module.i, ".header {\n  background-color: #2E2E2E;\n  color: white; }\n\n.carousel p, .carousel h3 {\n  text-shadow: 0px 4px 10px black;\n  font-weight: bold; }\n\n.pasos h2 {\n  color: white; }\n\n.marcas h2 {\n  color: white; }\n\n.consulta h3, .consulta h5 {\n  color: white; }\n\n.consulta .card-block {\n  background-color: white; }\n\n.perfil {\n  border-collapse: collapse; }\n  .perfil td {\n    padding: 0;\n    margin: 0;\n    vertical-align: middle; }\n  .perfil .form-control {\n    margin-bottom: 0; }\n  .perfil select {\n    background-color: white; }\n\nbody {\n  background-color: #2e2e2e; }\n\n.navbar {\n  background-color: transparent; }\n\n.scrolling-navbar {\n  transition: background .5s ease-in-out, padding .5s ease-in-out; }\n\n.top-nav-collapse {\n  background-color: #1C2331; }\n\nfooter.page-footer {\n  background-color: #1C2331;\n  margin-top: 0; }\n\n@media only screen and (max-width: 768px) {\n  .navbar {\n    background-color: #1C2331; } }\n", ""]);
 
 // exports
 
@@ -44163,7 +44203,7 @@ module.exports = "\n<!--Carousel Wrapper-->\n<div id=\"servicios\" class=\"carou
 /* 81 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"consulta\">\n\t<h3 class=\"text-center mt-5\">¿Interesado en adquirir algún material o equipo?</h3>\n\t<h5 class=\"text-center mb-3\">¡Cuéntanos de que se trata y te encontramos la mejor opción!</h5>\n\t<div class=\"col-lg-5 container \">\n\t\t<form name=\"Form\">\n\t\t\t<!--Naked Form-->\n\t\t\t<div class=\"card-block\">\n\t\t\t\t<!--Body-->\n\t\t\t\t<p class=\"text-center\">Te responderemos tu consulta por correo.</p>\n\t\t\t\t<br>\n\t\t\t\t<!--Body-->\n\t\t\t\t<div class=\"md-form\">\n\t\t\t\t\t<i class=\"fa fa-user prefix\"></i>\n\t\t\t\t\t<input ng-model = \"$ctrl.name\" name=\"name\" type=\"text\" id=\"form3\" class=\"form-control\" required>\n\t\t\t\t\t<label for=\"form3\">Nombre y Apellido</label>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"md-form\">\n\t\t\t\t\t<i class=\"fa fa-envelope prefix\"></i>\n\t\t\t\t\t<input ng-model=\"$ctrl.email\"  name=\"email\" type=\"email\" id=\"form2\" class=\"form-control\" required>\n\t\t\t\t\t<label for=\"form2\">Tu email</label>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"md-form\">\n\t\t\t\t\t<i class=\"fa fa-tag prefix\"></i>\n\t\t\t\t\t<input ng-model=\"$ctrl.motivo\" name=\"motivo\" type=\"text\" id=\"form32\" class=\"form-control\" required>\n\t\t\t\t\t<label for=\"form34\">Motivo</label>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"md-form\">\n\t\t\t\t\t<i class=\"fa fa-pencil prefix\"></i>\n\t\t\t\t\t<textarea ng-model = \"$ctrl.consulta\" type=\"text\" id=\"form8\" class=\"md-textarea\"  name=\"consulta\" required></textarea>\n\t\t\t\t\t<label for=\"form8\">Tu consulta</label>\n\t\t\t\t</div>\n\t\t\t\t<select ng-model=\"$ctrl.selectedCountry\"  pvp-country-picker=\"name\"  name=\"pais\" class=\"md-form mdb-select form-control container col-6\">\n\t\t\t\t\t<option value=\"\" disabled selected>Elige tu país</option>\n\t\t\t\t</select>\n\t\t\t\t<div class=\"text-center\">\n\t\t\t\t\t<button ng-disabled = \"Form.$invalid\" class=\"btn btn-default mask waves-effect\" ng-click=\"$ctrl.sendForm()\">Enviar</button>\n\t\t\t\t\t<div class=\"call\">\n\t\t\t\t\t\t<br>\n\t\t\t\t\t\t<p>¿O prefieres llamar?\n\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t<span><i class=\"fa fa-phone\"> </i></span>305-420-6706</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</form>\n\t\t</div>\n\t</div>\n\n\n\n<!-- Central Modal Medium Success -->\n<div class=\"modal fade\" id=\"modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog modal-notify modal-success\" role=\"document\">\n        <!--Content-->\n        <div class=\"modal-content\">\n            <!--Header-->\n            <div class=\"modal-header\">\n                <p class=\"heading lead\">Consulta enviada</p>\n\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                    <span aria-hidden=\"true\" class=\"white-text\">&times;</span>\n                </button>\n            </div>\n\n            <!--Body-->\n            <div class=\"modal-body\">\n                <div class=\"text-center\">\n                    <i class=\"fa fa-check fa-4x mb-1 animated rotateIn\"></i>\n                    <p>Tu consulta ha sido enviada correctamente, te notificaremos via correo la respuesta tan pronto como podamos, gracias por confiar en nosotros.</p>\n                </div>\n            </div>\n\n            <!--Footer-->\n            <div class=\"modal-footer justify-content-center\">\n                <a type=\"button\" class=\"btn btn-outline-secondary-modal waves-effect\" data-dismiss=\"modal\">Cerrar</a>\n            </div>\n        </div>\n        <!--/.Content-->\n    </div>\n</div>\n<!-- Central Modal Medium Success-->\n\n                                            ";
+module.exports = "<div class=\"consulta\">\n\t<h3 class=\"text-center mt-5\">¿Interesado en adquirir algún material o equipo?</h3>\n\t<h5 class=\"text-center mb-3\">¡Cuéntenos de que se trata y le encontraremos la mejor opción!</h5>\n\t<div class=\"col-lg-5 container \">\n\t\t<form name=\"Form\">\n\t\t\t<!--Naked Form-->\n\t\t\t<div class=\"card-block\">\n\t\t\t\t<!--Body-->\n\t\t\t\t<p class=\"text-center\">Le responderemos su consulta por correo.</p>\n\t\t\t\t<br>\n\t\t\t\t<!--Body-->\n\t\t\t\t<div class=\"md-form\">\n\t\t\t\t\t<i class=\"fa fa-user prefix\"></i>\n\t\t\t\t\t<input ng-model = \"$ctrl.name\" name=\"name\" type=\"text\" id=\"form3\" class=\"form-control\" required>\n\t\t\t\t\t<label for=\"form3\">Nombre y Apellido</label>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"md-form\">\n\t\t\t\t\t<i class=\"fa fa-envelope prefix\"></i>\n\t\t\t\t\t<input ng-model=\"$ctrl.email\"  name=\"email\" type=\"email\" id=\"form2\" class=\"form-control\" required>\n\t\t\t\t\t<label for=\"form2\">Su email</label>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"md-form\">\n\t\t\t\t\t<i class=\"fa fa-tag prefix\"></i>\n\t\t\t\t\t<input ng-model=\"$ctrl.motivo\" name=\"motivo\" type=\"text\" id=\"form32\" class=\"form-control\" required>\n\t\t\t\t\t<label for=\"form34\">Motivo</label>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"md-form\">\n\t\t\t\t\t<i class=\"fa fa-pencil prefix\"></i>\n\t\t\t\t\t<textarea ng-model = \"$ctrl.consulta\" type=\"text\" id=\"form8\" class=\"md-textarea\"  name=\"consulta\" required></textarea>\n\t\t\t\t\t<label for=\"form8\">Su consulta</label>\n\t\t\t\t</div>\n\t\t\t\t<select ng-model=\"$ctrl.selectedCountry\"  pvp-country-picker=\"name\"  name=\"pais\" class=\"md-form mdb-select form-control container col-6\">\n\t\t\t\t\t<option value=\"\" disabled selected>Su país</option>\n\t\t\t\t</select>\n\t\t\t\t<div class=\"text-center\">\n\t\t\t\t\t<button ng-disabled = \"Form.$invalid\" class=\"btn btn-default mask waves-effect\" ng-click=\"$ctrl.sendForm()\">Enviar</button>\n\t\t\t\t\t<div class=\"call\">\n\t\t\t\t\t\t<br>\n\t\t\t\t\t\t<p>¿O prefieres llamar?\n\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t<span><i class=\"fa fa-phone\"> </i></span>305-420-6706</p>\n\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</form>\n\t\t</div>\n\t</div>\n\n\n\n<!-- Central Modal Medium Success -->\n<div class=\"modal fade\" id=\"modal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog modal-notify modal-success\" role=\"document\">\n        <!--Content-->\n        <div class=\"modal-content\">\n            <!--Header-->\n            <div class=\"modal-header\">\n                <p class=\"heading lead\">Consulta enviada</p>\n\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                    <span aria-hidden=\"true\" class=\"white-text\">&times;</span>\n                </button>\n            </div>\n\n            <!--Body-->\n            <div class=\"modal-body\">\n                <div class=\"text-center\">\n                    <i class=\"fa fa-check fa-4x mb-1 animated rotateIn\"></i>\n                    <p>Tu consulta ha sido enviada correctamente, te notificaremos via correo la respuesta tan pronto como podamos, gracias por confiar en nosotros.</p>\n                </div>\n            </div>\n\n            <!--Footer-->\n            <div class=\"modal-footer justify-content-center\">\n                <a type=\"button\" class=\"btn btn-outline-secondary-modal waves-effect\" data-dismiss=\"modal\">Cerrar</a>\n            </div>\n        </div>\n        <!--/.Content-->\n    </div>\n</div>\n<!-- Central Modal Medium Success-->\n\n                                            ";
 
 /***/ }),
 /* 82 */
@@ -44181,13 +44221,13 @@ module.exports = "<div class=\"footer\">\n\t\n<!--Footer-->\n<footer class=\"pag
 /* 84 */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-toggleable-* navbar-dark header\">\n\t<div class=\"\">\n\t\t<div class=\"navbar-header\">\n\t\t\t<a class=\"navbar-brand d-inline-block\" ui-sref=\"app\">\n\t\t\t\t<img width=\"130\" height=\"50\" src=\"/assets/images/logo.png\">\n\t\t\t</a>\n\t\t\t<a >\n\t\t\t\t<button type=\"button\" class=\"btn btn-unique mask waves-effect\" ui-sref=\"login\">Iniciar Sesión</button>\n\t\t\t</a>\n\t\t\t<a>\n\t\t\t\t<button type=\"button\" class=\"btn btn-yellow mask waves-effect\" ui-sref=\"consulta\">Hacer una orden</button>\n\t\t\t</a>\n\t\t\t<a>\n\t\t\t\t<button type=\"button\" class=\"btn btn-amber mask waves-effect\" ui-sref=\"consulta-ticket\">Consultar Orden</button>\n\t\t\t</a>\n\t\t\t<div class=\"float-right col-12 col-lg-4\"><h5 class=\"h5-responsive\"><strong>Especialistas en adquisiciones y logística</strong> <br>\n\t\t\tDesde Miami, sirviendo a toda latinoamérica</h5></div>\n\t\t</div>\n\t</div>\n</nav>";
+module.exports = "<nav class=\"navbar navbar-toggleable-* navbar-dark header\">\n\t<div class=\"\">\n\t\t<div class=\"navbar-header\">\n\t\t\t<a class=\"navbar-brand d-inline-block\" ui-sref=\"app\">\n\t\t\t\t<img width=\"130\" height=\"50\" src=\"/assets/images/logo.png\">\n\t\t\t</a>\n\t\t\t<a ng-if=\"!$ctrl.session\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-unique mask waves-effect\" ui-sref=\"login\">Iniciar Sesión</button>\n\t\t\t</a>\n\t\t\t<a ng-if=\"$ctrl.session\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-unique mask waves-effect\" ui-sref=\"profile\">Perfil</button>\n\t\t\t</a>\n\t\t\t<a>\n\t\t\t\t<button type=\"button\" class=\"btn btn-yellow mask waves-effect\" ui-sref=\"consulta\">Hacer una orden</button>\n\t\t\t</a>\n\t\t\t<a>\n\t\t\t\t<button type=\"button\" class=\"btn btn-amber mask waves-effect\" ui-sref=\"consulta-ticket\">Consultar Orden</button>\n\t\t\t</a>\n\t\t\t<div class=\"float-right col-12 col-lg-4\"><h5 class=\"h5-responsive\"><strong>Especialistas en adquisiciones y logística</strong> <br>\n\t\t\tDesde Miami, sirviendo a toda latinoamérica</h5></div>\n\t\t</div>\n\t</div>\n</nav>";
 
 /***/ }),
 /* 85 */
 /***/ (function(module, exports) {
 
-module.exports = "<!--Form without header-->\n<div class=\"card col-lg-4 container mt-3 mb-3\">\n    <div class=\"card-block\">\n        <form name=\"Form\">\n            <!--Header-->\n            <div class=\"text-center\">\n                <h3><i class=\"fa fa-lock\"></i> Login:</h3>\n                <hr class=\"mt-2 mb-2\">\n            </div>\n            <!--Body-->\n            <div class=\"md-form\">\n                <i class=\"fa fa-envelope prefix\"></i>\n                <input type=\"email\" ng-model=\"$ctrl.correo\" id=\"form2\" class=\"form-control\" required>\n                <label for=\"form2\">email</label>\n            </div>\n            <div class=\"md-form\">\n                <i class=\"fa fa-lock prefix\"></i>\n                <input type=\"password\" ng-model=\"$ctrl.password\" id=\"form4\" class=\"form-control\">\n                <label for=\"form4\">password</label>\n                <small class=\"red-text\">{{$ctrl.result}}</small>\n            </div>\n            <div class=\"text-center\">\n                <button class=\"btn btn-unique mask waves-effect\" ng-disabled=\"Form.$invalid\" ng-click=\"$ctrl.login()\">Login</button>\n            </div>\n\n        </form>\n        \n    </div>\n</div>\n<!--/Form without header-->";
+module.exports = "<!--Form without header-->\n<div class=\"card col-lg-4 container mt-3 mb-3\">\n    <div class=\"card-block\">\n        <form name=\"Form\">\n            <!--Header-->\n            <div class=\"text-center\">\n                <h3><i class=\"fa fa-lock\"></i> Login:</h3>\n                <hr class=\"mt-2 mb-2\">\n            </div>\n            <!--Body-->\n            <div class=\"md-form\">\n                <i class=\"fa fa-envelope prefix\"></i>\n                <input type=\"email\" ng-model=\"$ctrl.correo\" id=\"form2\" class=\"form-control\" required>\n                <label for=\"form2\">email</label>\n            </div>\n            <div class=\"md-form\">\n                <i class=\"fa fa-lock prefix\"></i>\n                <input type=\"password\" ng-model=\"$ctrl.password\" id=\"form4\" class=\"form-control\">\n                <label for=\"form4\">password</label>\n                <small class=\"red-text\">{{$ctrl.result.error}}</small>\n            </div>\n            <div class=\"text-center\">\n                <button class=\"btn btn-unique mask waves-effect\" ng-disabled=\"Form.$invalid\" ng-click=\"$ctrl.login()\">Login</button>\n            </div>\n\n        </form>\n        \n    </div>\n</div>\n<!--/Form without header-->";
 
 /***/ }),
 /* 86 */
@@ -44211,7 +44251,7 @@ module.exports = "<div class=\"pasos\">\n\t<h2 class=\"text-center mt-3 mb-3\">C
 /* 89 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n\t<div class=\"row\">\n\t\t<div class=\"col-lg-3 mt-5\">\n\t\t\t<div class=\"card text-center p-5 mb-2\">\n\t\t\t\t<h3>Total de operaciones</h3>\n\t\t\t\t<h1>{{$ctrl.result.length}}</h1>\n\t\t\t</div>\n\t\t\t<div class=\"card text-center p-5 mb-2\">\n\t\t\t\t<i ng-if=\"$ctrl.hour < 17\" class=\"fa fa-sun-o yellow-text fa-5x mb-1\"></i>\n\t\t\t\t<i ng-if=\"$ctrl.hour > 17\" class=\"fa fa-moon-o blue-text fa-5x mb-1\"></i>\n\t\t\t\t<h3>Hoy es</h3>\n\t\t\t\t<h4>{{$ctrl.fecha | date:'dd-MM-yyyy'}}</h4>\n\t\t\t</div>\n\t\t\t<div class=\"card text-center p-5 mb-5\">\n\t\t\t\t<h3>Notas</h3>\n\t\t\t\t<input type=\"text\" class=\"form-control\" id=\"note-1\">\n\t\t\t\t<button class=\"btn btn-success\">Agregar Nota</button>\n\t\t\t</div>\n\t\t</div>\n\t\t<div class=\"col-lg-9\">\n\t\t\t<div class=\"card mt-5 mb-1 p-5\">\n\t\t\t\t<h1>Control de Operaciones</h1>\n\t\t\t\t<form class=\"form-inline\">\n\t\t\t\t\t<div class=\"form-group col-lg-4\">\n\t\t\t\t\t\t<input type=\"text\" ng-model=\"$ctrl.search\" class=\"form-control\" placeholder=\"Buscar\">\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t\t<div class=\"col-lg-1 container text-center\">\n\t\t\t\t\t<dir-pagination-controls\n\t\t\t\t\tmax-size=\"5\"\n\t\t\t\t\tdirection-links=\"true\"\n\t\t\t\t\tboundary-links=\"true\" >\n\t\t\t\t\t</dir-pagination-controls>\n\t\t\t\t</div>\n\t\t\t\t<table class=\"table\">\n\t\t\t\t\t<thead class=\"success-color white-text\">\n\t\t\t\t\t\t<th>Nombre</th>\n\t\t\t\t\t\t<th>Correo</th>\n\t\t\t\t\t\t<th>Ticket</th>\n\t\t\t\t\t\t<th>País</th>\n\t\t\t\t\t\t<th>Estado</th>\n\t\t\t\t\t\t<th>Acción</th>\n\t\t\t\t\t</thead>\n\t\t\t\t\t<tbody>\n\t\t\t\t\t\t<tr dir-paginate=\"ticket in $ctrl.result | filter: $ctrl.search | itemsPerPage: 5\">\n\t\t\t\t\t\t\t<td>{{ticket.nombre}}</td>\n\t\t\t\t\t\t\t<td title=\"{{ticket.correo}}\">{{ticket.correo | limitTo: 10}}...</td>\n\t\t\t\t\t\t\t<td>{{ticket.ticket}}</td>\n\t\t\t\t\t\t\t<td title=\"{{ticket.pais}}\">{{ticket.pais | limitTo: 10}}</td>\n\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t<select class=\"form-control\">\n\t\t\t\t\t\t\t\t\t<option>RECIBIDA</option>\n\t\t\t\t\t\t\t\t\t<option>EN PROCESO</option>\n\t\t\t\t\t\t\t\t\t<option>OFERTA ENVIADA</option>\n\t\t\t\t\t\t\t\t\t<option>CONCRETADA</option>\n\t\t\t\t\t\t\t\t\t<option>NO CONCRETADA</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t<i class=\"fa fa-comments fa-2x green-text align-middle\"></i>\n\t\t\t\t\t\t\t\t<i class=\"fa fa-times fa-2x red-text align-middle\"></i>\n\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t</tr>\n\t\t\t\t\t</tbody>\n\t\t\t\t</table>\n\t\t\t</div>\n\t\t</div>\n\t\t\n\t</div>\n</div>";
+module.exports = "<div class=\"container perfil\">\n\t<div class=\"row\">\n\t\t<div class=\"col-lg-12\">\n\t\t\t<div class=\"card mt-5 mb-1 p-5\">\n\t\t\t\t<form class=\"form-inline mb-2\">\n\t\t\t\t\t<h1 class=\"col-lg-7\">Control de Operaciones</h1>\n\t\t\t\t\t<div class=\"form-group float-right\">\n\t\t\t\t\t\t<input type=\"text\" ng-model=\"$ctrl.search\" class=\"form-control\" placeholder=\"Buscar\">\n\t\t\t\t\t</div>\n\t\t\t\t</form>\n\t\t\t\t<div class=\"col-lg-1 container text-center direccions\">\n\t\t\t\t\t<dir-pagination-controls\n\t\t\t\t\tmax-size=\"20\"\n\t\t\t\t\tdirection-links=\"true\">\n\t\t\t\t\t</dir-pagination-controls>\n\t\t\t\t</div>\n\t\t\t\t<table class=\"table table-sm table-hover\">\n\t\t\t\t\t<thead class=\"stylish-color-dark white-text\">\n\t\t\t\t\t\t<th>Nombre</th>\n\t\t\t\t\t\t<th>Correo</th>\n\t\t\t\t\t\t<th>Ticket</th>\n\t\t\t\t\t\t<th>País</th>\n\t\t\t\t\t\t<th>Estado</th>\n\t\t\t\t\t\t<th>Recibido hace</th>\n\t\t\t\t\t\t<th>Acción</th>\n\t\t\t\t\t</thead>\n\t\t\t\t\t<tbody>\n\t\t\t\t\t\t<tr dir-paginate=\"ticket in $ctrl.result | filter: $ctrl.search | itemsPerPage: 30\">\n\t\t\t\t\t\t\t<td>{{ticket.nombre}}</td>\n\t\t\t\t\t\t\t<td title=\"{{ticket.correo}}\">{{ticket.correo | limitTo: 10}}...</td>\n\t\t\t\t\t\t\t<td>{{ticket.ticket}}</td>\n\t\t\t\t\t\t\t<td title=\"{{ticket.pais}}\">{{ticket.pais | limitTo: 10}}</td>\n\t\t\t\t\t\t\t<td>\n\t\t\t\t\t\t\t\t<select>\n\t\t\t\t\t\t\t\t\t<option>RECIBIDA</option>\n\t\t\t\t\t\t\t\t\t<option>EN PROCESO</option>\n\t\t\t\t\t\t\t\t\t<option>OFERTA ENVIADA</option>\n\t\t\t\t\t\t\t\t\t<option>CONCRETADA</option>\n\t\t\t\t\t\t\t\t\t<option>NO CONCRETADA</option>\n\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t<td class=\"text-center\" title=\"Desde: {{ticket.fecha}}\">\n\t\t\t\t\t\t\t\t{{$ctrl.calculoDias(ticket.fecha)}}\n\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t<td class=\"text-center\">\n\t\t\t\t\t\t\t\t<i ng-click=\"$ctrl.openChat(ticket.ticket)\" class=\"fa fa-comments green-text align-middle\"></i>\n\t\t\t\t\t\t\t\t<i ng-click=\"$ctrl.deleteClient(ticket.ticket)\" class=\"fa fa-times red-text align-middle\"></i>\n\t\t\t\t\t\t\t\t<small>{{$ctrl.deleteSelected}}</small>\n\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t</tr>\n\t\t\t\t\t</tbody>\n\t\t\t\t</table>\n\t\t\t</div>\n\t\t</div>\n\t\t\n\t</div>\n</div>\n\n<!-- Central Modal Medium Info -->\n<div class=\"modal fade\" id=\"chat\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog modal-lg modal-notify modal-info\" role=\"document\">\n        <!--Content-->\n        <div class=\"modal-content\">\n            <!--Header-->\n            <div class=\"modal-header\">\n                <p class=\"heading lead\">Mensajes</p>\n\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                    <span aria-hidden=\"true\" class=\"white-text\">&times;</span>\n                </button>\n            </div>\n\n            <!--Body-->\n            <div class=\"modal-body\">\n                {{$ctrl.messages}}\n            </div>\n\n            <!--Footer-->\n            <div class=\"modal-footer justify-content-center\">\n                <a type=\"button\" class=\"btn btn-primary-modal\">Enviar <i class=\"fa fa-envelope-o ml-1\"></i></a>\n            </div>\n        </div>\n        <!--/.Content-->\n    </div>\n</div>\n<!-- Central Modal Medium Info-->\n\n<!-- Central Modal Medium Info -->\n<div class=\"modal fade\" id=\"delete\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog modal-sm modal-notify modal-danger\" role=\"document\">\n        <!--Content-->\n        <div class=\"modal-content\">\n            <!--Header-->\n            <div class=\"modal-header\">\n                <p class=\"heading lead\">Eliminar a cliente</p>\n\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                    <span aria-hidden=\"true\" class=\"white-text\">&times;</span>\n                </button>\n            </div>\n\n            <!--Body-->\n            <div class=\"modal-body\">\n                <p>¿Estás seguro de eliminar este ticket?, se eliminarán tanto datos como toda comunicación con el cliente.</p>\n            </div>\n\n            <!--Footer-->\n            <div class=\"modal-footer justify-content-center\">\n                <a type=\"button\" class=\"btn btn-primary-modal\" ng-click=\"$ctrl.submitDelete($ctrl.deleteSelected)\">Eliminar <i class=\"fa fa-times ml-1\"></i></a>\n            </div>\n        </div>\n        <!--/.Content-->\n    </div>\n</div>\n<!-- Central Modal Medium Info-->";
 
 /***/ }),
 /* 90 */
