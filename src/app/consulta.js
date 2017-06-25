@@ -1,7 +1,8 @@
 export const consulta = {
   template: require('../views/consulta.html'),
-  controller(API) {
+  controller(API, $state) {
     this.sendForm = () => {
+      this.loading = true;
       const today = new Date();
       const data = {
         nombre: this.name,
@@ -12,10 +13,15 @@ export const consulta = {
         fecha: today
       };
       API.sendQuery(data).then(() => {
+        this.loading = false;
         angular.element('#modal').modal('show');
       }, error => {
         this.error = error;
       });
     };
+
+    angular.element('#modal').on('hidden.bs.modal', () => {
+      $state.go('app');
+    });
   }
 };

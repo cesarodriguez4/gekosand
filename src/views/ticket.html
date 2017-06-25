@@ -1,0 +1,35 @@
+<div class="ticket container">
+	<div col="row">
+		<div class="p-5 mb-5 col-lg-5 float-right card">
+			<p><strong>DATOS DE CONSULTA:</strong></p>
+			<p>Ticket #: {{$ctrl.data[0].ticket}}</p>
+			<p>Cliente: {{$ctrl.data[0].nombre}}</p>
+			<p>Motivo: {{$ctrl.data[0].motivo}}</p>
+			<p>País: {{$ctrl.data[0].pais}}</p>
+			<p>Estado de solicitud: {{$ctrl.estados[$ctrl.data[0].estado]}}</p>
+		</div>
+		<div class="modal-content col-lg-6 mb-3 mt-3">
+			<!--Header-->
+			<div class="modal-header">
+				<p class="heading lead">Mensajes</p>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true" class="white-text">&times;</span>
+				</button>
+			</div>
+			<!--Body-->
+			<div class="modal-body">
+				<div ng-show="$ctrl.messages.length === 0">No existen mensajes con este cliente.</div>
+				<div ng-show="$ctrl.messages.length !== 0">
+				<nav title="{{mess.fecha}}" class="card col-8 p-3 rounded-left d-block float-left default-color text-white mb-1" ng-repeat="mess in $ctrl.messages" ng-class="{'float-right  primary-color': mess.envia}">{{mess.mensaje}}</nav>
+			</div>
+		</div>
+		<!--Footer-->
+		<div class="modal-footer justify-content-center">
+			<input ng-model="$ctrl.nuevoMensaje" type="text" class="form-control" placeholder="Escribe tu mensaje aqui" name="mensaje">
+			<a type="button" class="btn btn-primary" ng-click="$ctrl.newMessClient();">Enviar<i class="fa fa-envelope-o ml-1"></i></a>
+		</div>
+	</div>
+</div>
+
+
+</div>

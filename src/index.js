@@ -14,6 +14,7 @@ import {login} from './app/login';
 import {recuperar} from './app/recuperar';
 import {consultaTicket} from './app/consultaTicket';
 import {profile} from './app/profile';
+import {ticket} from './app/ticket';
 
 import {API} from './app/API';
 
@@ -41,5 +42,6 @@ angular
   .component('login', login)
   .component('recuperar', recuperar)
   .component('consultaTicket', consultaTicket)
-  .component('profile', profile);
+  .component('profile', profile)
+  .component('ticket', ticket);
 

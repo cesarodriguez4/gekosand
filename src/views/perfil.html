@@ -6,6 +6,9 @@
 					<h1 class="col-lg-7">Control de Operaciones</h1>
 					<div class="form-group float-right">
 						<input type="text" ng-model="$ctrl.search" class="form-control" placeholder="Buscar">
+						<select class="form-control" ng-model="$ctrl.filtro" ng-change="$ctrl.filterOn($ctrl.filtro);" ng-options="state for state in $ctrl.estados">
+							<option value="">ORDENAR POR {{$ctrl.olvidan}}:</option>
+						</select>
 					</div>
 				</form>
 				<div class="col-lg-1 container text-center direccions">
@@ -25,18 +28,14 @@
 						<th>Acción</th>
 					</thead>
 					<tbody>
-						<tr dir-paginate="ticket in $ctrl.result | filter: $ctrl.search | itemsPerPage: 30">
+						<tr dir-paginate="ticket in $ctrl.result | filter: $ctrl.search | itemsPerPage: 30" ng-show="ticket.nombre">
 							<td>{{ticket.nombre}}</td>
 							<td title="{{ticket.correo}}">{{ticket.correo | limitTo: 10}}...</td>
 							<td>{{ticket.ticket}}</td>
 							<td title="{{ticket.pais}}">{{ticket.pais | limitTo: 10}}</td>
 							<td>
-								<select>
-									<option>RECIBIDA</option>
-									<option>EN PROCESO</option>
-									<option>OFERTA ENVIADA</option>
-									<option>CONCRETADA</option>
-									<option>NO CONCRETADA</option>
+								<select ng-options="state for state in $ctrl.estados" ng-model="$ctrl.state[ticket.ticket]" ng-change="$ctrl.newState(ticket.ticket, $ctrl.state[ticket.ticket])">
+									<option value="">{{$ctrl.estados[ticket.estado]}}</option>
 								</select>
 							</td>
 							<td class="text-center" title="Desde: {{ticket.fecha}}">
@@ -45,7 +44,6 @@
 							<td class="text-center">
 								<i ng-click="$ctrl.openChat(ticket.ticket)" class="fa fa-comments green-text align-middle"></i>
 								<i ng-click="$ctrl.deleteClient(ticket.ticket)" class="fa fa-times red-text align-middle"></i>
-								<small>{{$ctrl.deleteSelected}}</small>
 							</td>
 						</tr>
 					</tbody>
@@ -72,12 +70,16 @@
 
             <!--Body-->
             <div class="modal-body">
-                {{$ctrl.messages}}
+                <div ng-show="$ctrl.messages.length === 0">No existen mensajes con este cliente.</div>
+                <div ng-show="$ctrl.messages.length !== 0">
+                	<nav title="{{mess.fecha}}" class="card col-8 p-3 rounded-left d-block float-left default-color text-white mb-1" ng-repeat="mess in $ctrl.messages" ng-class="{'float-right  primary-color': mess.envia}">{{mess.mensaje}}</nav>
+                </div>
             </div>
 
             <!--Footer-->
             <div class="modal-footer justify-content-center">
-                <a type="button" class="btn btn-primary-modal">Enviar <i class="fa fa-envelope-o ml-1"></i></a>
+            <input ng-model="$ctrl.nuevoMensaje" type="text" class="form-control" placeholder="Escribe tu mensaje aqui" name="mensaje">
+                <a type="button" class="btn btn-primary-modal" ng-click="$ctrl.newMess();">Enviar<i class="fa fa-envelope-o ml-1"></i></a>
             </div>
         </div>
         <!--/.Content-->
