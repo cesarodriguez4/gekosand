@@ -44064,7 +44064,7 @@ exports = module.exports = __webpack_require__(0)();
 
 
 // module
-exports.push([module.i, ".header {\n  background-color: #2E2E2E;\n  color: white; }\n\n.carousel p, .carousel h3 {\n  text-shadow: 0px 4px 10px black;\n  font-weight: bold; }\n\n.pasos h2 {\n  color: white; }\n\n.marcas h2 {\n  color: white; }\n\n.consulta h3, .consulta h5 {\n  color: white; }\n\n.consulta .card-block {\n  background-color: white; }\n\n.perfil {\n  border-collapse: collapse; }\n  .perfil td {\n    padding: 0;\n    margin: 0;\n    vertical-align: middle; }\n  .perfil .form-control {\n    margin-bottom: 0; }\n  .perfil select {\n    background-color: white; }\n\nbody {\n  background-color: #2e2e2e; }\n\n.navbar {\n  background-color: transparent; }\n\n.scrolling-navbar {\n  transition: background .5s ease-in-out, padding .5s ease-in-out; }\n\n.top-nav-collapse {\n  background-color: #1C2331; }\n\nfooter.page-footer {\n  background-color: #1C2331;\n  margin-top: 0; }\n\n@media only screen and (max-width: 768px) {\n  .navbar {\n    background-color: #1C2331; } }\n", ""]);
+exports.push([module.i, ".header {\n  background-color: #2E2E2E;\n  color: white; }\n\n.carousel p, .carousel h3 {\n  text-shadow: 0px 1px 3px black;\n  font-weight: bold; }\n\n.pasos h2 {\n  color: white; }\n\n.marcas h2 {\n  color: white; }\n\n.consulta h3, .consulta h5 {\n  color: white; }\n\n.consulta .card-block {\n  background-color: white; }\n\n.perfil {\n  border-collapse: collapse; }\n  .perfil td {\n    padding: 0;\n    margin: 0;\n    vertical-align: middle; }\n  .perfil .form-control {\n    margin-bottom: 0; }\n  .perfil select {\n    background-color: white; }\n\nbody {\n  background-color: #2e2e2e; }\n\n.navbar {\n  background-color: transparent; }\n\n.scrolling-navbar {\n  transition: background .5s ease-in-out, padding .5s ease-in-out; }\n\n.top-nav-collapse {\n  background-color: #1C2331; }\n\nfooter.page-footer {\n  background-color: #1C2331;\n  margin-top: 0; }\n\n.fa-tam {\n  font-size: 3em !important;\n  margin-bottom: 2%; }\n\n@media only screen and (max-width: 768px) {\n  .navbar {\n    background-color: #1C2331; } }\n", ""]);
 
 // exports
 
@@ -44211,7 +44211,7 @@ module.exports = __webpack_require__.p + "52048f0898cb209a41f1332d9b921404.png";
 /* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "499bbd66a1f2d858b546095cc5f00303.jpeg";
+module.exports = __webpack_require__.p + "d1b0e01a0fa73ea5d5cf5234704cdda6.jpeg";
 
 /***/ }),
 /* 62 */
@@ -44253,7 +44253,7 @@ module.exports = __webpack_require__.p + "5cc432ef9ff094dfb58d58479601f152.jpg";
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "8c5ffcb6c1c42e05c08b9f0fc1cfae80.jpeg";
+module.exports = __webpack_require__.p + "55c648b554c211a65e73ac8a64dc036a.jpeg";
 
 /***/ }),
 /* 69 */
@@ -44265,7 +44265,7 @@ module.exports = __webpack_require__.p + "317e0e28b79c40586c748e372400aff8.png";
 /* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "37249cbc06554a65cf145f1e83357119.jpeg";
+module.exports = __webpack_require__.p + "72cb1f9b8c75e1fcc245fe5b433b12a3.jpeg";
 
 /***/ }),
 /* 71 */
@@ -44289,7 +44289,7 @@ module.exports = __webpack_require__.p + "6ada0af81a980b90dabd4b0a876d2de4.png";
 /* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "d2d7e17511590ec72eafdea1727776c1.jpeg";
+module.exports = __webpack_require__.p + "62acd67ee177b9e47a19ee26ac303246.jpeg";
 
 /***/ }),
 /* 75 */
@@ -44307,7 +44307,7 @@ module.exports = __webpack_require__.p + "e3de53430798abdebaea98adf3db0d6d.png";
 /* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "83384c47cb1de7d7eb70bfda5b57fa99.jpeg";
+module.exports = __webpack_require__.p + "48e65efd9ce64dcde399283d7f3ce08b.jpeg";
 
 /***/ }),
 /* 78 */
@@ -44319,7 +44319,7 @@ module.exports = __webpack_require__.p + "419750a7baae536e4645ba59125e93f0.png";
 /* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "bdcf2ecaf7e730fb94dfb19131b28106.jpeg";
+module.exports = __webpack_require__.p + "0ce4ea98de51d68ab096c2a93a560d8b.jpeg";
 
 /***/ }),
 /* 80 */
@@ -44355,7 +44355,7 @@ module.exports = "<div class=\"footer mt-4\">\n\t\n<!--Footer-->\n<footer class=
 /* 85 */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-toggleable-* navbar-dark header\">\n\t<div class=\"\">\n\t\t<div class=\"navbar-header\">\n\t\t\t<a class=\"navbar-brand d-inline-block\" ui-sref=\"app\">\n\t\t\t\t<img width=\"130\" height=\"50\" src=\"/assets/images/logo.png\">\n\t\t\t</a>\n\t\t\t<a>\n\t\t\t\t<button type=\"button\" class=\"btn btn-unique mask waves-effect\" ui-sref=\"app\">Incio</button>\n\t\t\t</a>\n\t\t\t<a ng-if=\"!$ctrl.session\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-unique mask waves-effect\" ui-sref=\"login\">Iniciar Sesión</button>\n\t\t\t</a>\n\t\t\t<a ng-if=\"$ctrl.session\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-unique mask waves-effect\" ui-sref=\"profile\">Perfil</button>\n\t\t\t</a>\n\t\t\t<a>\n\t\t\t\t<button type=\"button\" class=\"btn btn-yellow mask waves-effect\" ui-sref=\"consulta\">Hacer una orden</button>\n\t\t\t</a>\n\t\t\t<a>\n\t\t\t\t<button type=\"button\" class=\"btn btn-amber mask waves-effect\" ui-sref=\"consulta-ticket\">Consultar Orden</button>\n\t\t\t</a>\n\t\t\t<div class=\"float-right col-12 col-lg-4\"><h5 class=\"h5-responsive\"><strong>Especialistas en adquisiciones y logística</strong> <br>\n\t\t\tDesde Miami, sirviendo a toda latinoamérica</h5></div>\n\t\t</div>\n\t</div>\n</nav>";
+module.exports = "<nav class=\"navbar navbar-toggleable-* navbar-dark header\">\n\t<div class=\"\">\n\t\t<div class=\"navbar-header\">\n\t\t\t<a class=\"navbar-brand d-inline-block\" ui-sref=\"app\">\n\t\t\t\t<img width=\"130\" height=\"50\" src=\"/assets/images/logo.png\">\n\t\t\t</a>\n\t\t\t<a>\n\t\t\t\t<button type=\"button\" class=\"btn btn-unique mask waves-effect\" ui-sref=\"app\">Incio</button>\n\t\t\t</a>\n\t\t\t<a ng-if=\"!$ctrl.session\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-unique mask waves-effect\" ui-sref=\"login\">Iniciar Sesión</button>\n\t\t\t</a>\n\t\t\t<a ng-if=\"$ctrl.session\">\n\t\t\t\t<button type=\"button\" class=\"btn btn-unique mask waves-effect\" ui-sref=\"profile\">Perfil</button>\n\t\t\t</a>\n\t\t\t<div class=\"float-right col-12 col-lg-4\"><h5 class=\"h5-responsive\"><strong>Especialistas en adquisiciones y logística</strong> <br>\n\t\t\tDesde Miami, sirviendo a toda latinoamérica</h5></div>\n\t\t</div>\n\t</div>\n</nav>";
 
 /***/ }),
 /* 86 */
@@ -44367,7 +44367,7 @@ module.exports = "<!--Form without header-->\n<div class=\"card col-lg-4 contain
 /* 87 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n\t<carousel></carousel>\n\t<pasos></pasos>\n\t<marcas></marcas>\n\t<div class=\"text-center mt-3 mb-3\">\n\t\t<h2 style=\"color: white;\">Puedes contactarnos en Miami a través del <br>\n\t\t305-420-6706</h2>\n\t</div>\n</div>\n";
+module.exports = "<div class=\"container-fluid\">\n\t<div class=\"row\">\n\t\t<a class=\"col-md-3\">\n\t\t    <div>\n\t\t      <button type=\"button\" class=\"btn container  mask waves-effect info-color\" ui-sref=\"consulta\"><i class=\"fa fa-4x fa-tam fa-question-circle\"></i><p>¿Cómo funciona el servicio?</p></button>\t\n\t\t    </div>\n\t\t</a>\n\t\t<a class=\"col-md-3\">\n\t\t    <div>\n\t\t      <button type=\"button\" class=\"btn container  mask waves-effect warning-color\" ui-sref=\"consulta\"><i class=\"fa fa-4x fa-tam fa-calculator\"></i><p>Cotiza tus envíos aquí</p></button>\t\n\t\t    </div>\n\t\t</a>\n\t\t<a class=\"col-md-3\">\n            <div>\n            \t<button type=\"button\" class=\"btn container  waves-effect mask success-color\" ui-sref=\"consulta-ticket\"><i class=\"fa fa-globe fa-4x fa-tam\"></i><p>¿Dónde está mi paquete?</p></button>\n            </div>\n\t\t</a>\n\t\t<a class=\"col-md-3\">\n            <div>\n            \t<button type=\"button\" class=\"btn container  waves-effect mask default-color\" ui-sref=\"consulta\"><i class=\"fa fa-address-book fa-4x fa-tam\"></i><p>Contacto</p></button>\n            </div>\n\t\t</a>\n\t</div>\n\t<carousel></carousel>\n<pasos></pasos>\n<marcas></marcas>\n<div class=\"text-center mt-3 mb-3\">\n\t<h2 style=\"color: white;\">Puedes contactarnos en Miami a través del <br>\n\t305-420-6706</h2>\n</div>\n</div>";
 
 /***/ }),
 /* 88 */
