@@ -33,5 +33,9 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
     .state('ticket', {
       url: '/ticket/:ticket',
       component: 'ticket'
+    })
+    .state('we', {
+      url: '/nosotros',
+      component: 'we'
     });
 }
